@@ -3,12 +3,35 @@
 {% block content %}
 <h1>Список городов</h1>
 <div class="row">
-    <div class="col-md">
+    <div class="col-md-8 mx-auto my-2">
         {% for object in city_list %}
-        <p>
-            <a href="{% url 'city_detail' object.pk %}">{{object.name}}</a>
-        </p>
+        <table class="table table-striped">
+            <tr>
+                <td><a href="{% url 'city_detail' object.pk %}">{{object.name}}</a></td>
+                <td>
+                    <a href="{% url 'city_update' object.pk %}">
+                        <button type="submit" class="btn btn-outline-warning">Редактировать</button>
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'city_delete' object.pk %}">
+                        <button type="submit" class="btn btn-outline-danger">Удалить</button>
+                    </a>
+                </td>
+            </tr>
         {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% include 'pagination.html' %}
+<div class="row">
+    <div class="col-md-4">
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Сохранить">
+        </form>
     </div>
 </div>
 {% endblock %}
