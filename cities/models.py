@@ -13,7 +13,3 @@ class City(models.Model):
     def __str__(self):
         return self.name
 
-    # def get_absolute_url(self):
-    #     return reverse('cities:detail', kwargs={'pk': self.pk})
-
-
