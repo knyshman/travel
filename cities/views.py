@@ -14,9 +14,7 @@ class CitiesList(ListView):
     # def get_context_data(self, **kwargs):
     #     context = super().get_context_data(**kwargs)
     #     form = CityForm()
-    #     if form.is_valid:
-    #         form.save()
-    #         context['form'] = form
+    #     context['form'] = form
     #     return context
 
 
