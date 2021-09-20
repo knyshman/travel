@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}Новый маршрут{% endblock %}
+{% block content %}
+<h1>Новый маршрут </h1>
+{% url 'find_routes' as action %}
+{% include 'form_for_city.html' with button='Найти' action=action %}
+{% endblock %}

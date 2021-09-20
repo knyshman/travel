@@ -8,7 +8,7 @@ class Route(models.Model):
     travel_times = models.PositiveSmallIntegerField(verbose_name='Общее время в пути')
     from_city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='Город отправления', related_name='route_from_city')
     to_city = models.ForeignKey(City, on_delete=models.CASCADE, verbose_name='Город прибытия', related_name='route_to_city')
-    trains = models.ManyToManyField('trains.Train', verbose_name='Список поездов')
+    trains = models.ManyToManyField(Train, verbose_name='Список поездов')
 
     def __str__(self):
         return f'Маршрут {self.name} из города {self.from_city} в город {self.to_city}'
