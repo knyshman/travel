@@ -7,14 +7,14 @@
         {% for object in city_list %}
         <table class="table table-striped">
             <tr>
-                <td><a href="{% url 'city_detail' object.pk %}">{{object.name}}</a></td>
+                <td><a href="{% url 'cities:detail' object.pk %}">{{object.name}}</a></td>
                 <td>
-                    <a href="{% url 'city_update' object.pk %}">
+                    <a href="{% url 'cities:update' object.pk %}">
                         <button type="submit" class="btn btn-outline-warning">Редактировать</button>
                     </a>
                 </td>
                 <td>
-                    <a href="{% url 'city_delete' object.pk %}">
+                    <a href="{% url 'cities:delete' object.pk %}">
                         <button type="submit" class="btn btn-outline-danger">Удалить</button>
                     </a>
                 </td>

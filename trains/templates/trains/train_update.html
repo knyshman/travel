@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %} Изменение поезда {{object.name}}{% endblock %}
+{% block content %}
+<h1>Изменение поезда {{object.name}}</h1>
+{% include 'form_for_train.html' with button='Редактировать' %}
+{% endblock %}

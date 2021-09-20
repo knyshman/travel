@@ -20,18 +20,21 @@ class CitiesList(ListView):
 
 class CityDetail(DetailView):
     model = City
+    template_name = 'cities/city_detail.html'
 
 
 class CityCreate(CreateView):
     template_name = 'cities/city_create.html'
     form_class = CityForm
     model = City
+    success_url = reverse_lazy('cities:home')
 
 
 class CityUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'cities/city_update.html'
     form_class = CityForm
     model = City
+    success_url = reverse_lazy('cities:home')
     success_message = 'Город успешно отредактирован'
 
 
@@ -39,5 +42,5 @@ class CityDelete(DeleteView):
     model = City
     template_name = 'cities/city_delete.html'
     form_class = CityForm
-    success_url = reverse_lazy('cities_list')
+    success_url = reverse_lazy('cities:home')
 

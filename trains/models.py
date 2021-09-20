@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.urls import reverse
+
 from cities.models import City
 
 
@@ -27,4 +29,7 @@ class Train(models.Model):
 
     def save(self, *args, **kwargs):
         self.clean()
-        super(self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('trains:detail', kwargs={'pk': self.pk})

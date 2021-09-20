@@ -19,7 +19,9 @@ from .views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cities/', include('cities.urls')),
-    path('home', home),
+    path('cities/', include(('cities.urls', 'cities'))),
+    path('', home),
+    path('trains/', include(('trains.urls', 'trains')))
+
 
 ]
