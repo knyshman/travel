@@ -1,7 +1,12 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, DeleteView
+
 from cities.models import City
 from routes.forms import RouteForm, RouteModelForm
+from routes.models import Route
 from routes.utils import get_routes
 from trains.models import Train
 
@@ -33,7 +38,6 @@ def add_route(request):
     if request.method == "POST":
         context = {}
         data = request.POST
-        print(data)
         if data:
             total_time = int(data['total_time'])
             from_city_id = int(data['from_city'])
@@ -70,3 +74,23 @@ def save_route(request):
     else:
         messages.error(request, "Невозможно сохранить несуществующий маршрут")
         return redirect('/')
+
+
+class RouteList(ListView):
+    model = Route
+    paginate_by = 10
+    template_name = 'routes/list.html'
+
+
+class RouteDetail(DetailView):
+    model = Route
+    template_name = 'routes/detail.html'
+
+
+class RouteDelete(LoginRequiredMixin, DeleteView):
+    model = Route
+    success_url = reverse_lazy('home')
+
+    def get(self, request, *args, **kwargs):
+        messages.success(request, 'Поезд успешно удален')
+        return self.post(request, *args, **kwargs)

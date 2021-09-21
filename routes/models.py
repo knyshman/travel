@@ -24,7 +24,7 @@ class Route(models.Model):
     )
 
     def __str__(self):
-        return f'Маршрут {self.name} из города {self.from_city}'
+        return f'Маршрут {self.name} из города {self.from_city} в город {self.to_city}'
 
     class Meta:
         verbose_name = 'Маршрут'
