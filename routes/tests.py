@@ -1,6 +1,12 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
+from django.urls import reverse
+from routes import views as routes_view
+from cities.views import CityDetail
 from cities.models import City
+from routes.forms import RouteForm
 from trains.models import Train
+from routes.utils import dfs_paths, get_graph
 
 
 class AllTestCase(TestCase):
@@ -31,3 +37,79 @@ class AllTestCase(TestCase):
                   travel_time=4)
         ]
         Train.objects.bulk_create(lst)
+
+    def test_model_city_duplicate(self):
+        city = City(name='A')
+        with self.assertRaises(ValidationError):
+            city.full_clean()
+
+    def test_model_train_duplicate(self):
+        train = Train(name='t1', from_city=self.city_A, to_city=self.city_B,
+                  travel_time=9)
+        with self.assertRaises(ValidationError):
+            train.full_clean()
+
+    def test_model_train_time_duplicate(self):
+        train = Train(name='t123', from_city=self.city_A, to_city=self.city_B,
+                  travel_time=9)
+        with self.assertRaises(ValidationError):
+            train.full_clean()
+
+        try:
+            train.full_clean()
+        except ValidationError as e:
+            self.assertEqual({'__all__': ['Измените время в пути']}, e.message_dict)
+            self.assertIn('Измените время в пути', e.messages)
+
+    def test_routes_home_views(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='routes/home.html')
+        self.assertEqual(response.resolver_match.func, routes_view.home)
+
+    def test_cbv_detail_views(self):
+        response = self.client.get(reverse('cities:detail', kwargs={'pk': self.city_A.pk}))
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed(response, template_name='cities/city_detail.html')
+        self.assertEqual(response.resolver_match.func.__name__, CityDetail.as_view().__name__)
+
+    def test_find_all_routes(self):
+        qs = Train.objects.all()
+        graph = get_graph(qs)
+        all_routes = list(dfs_paths(graph, self.city_A.pk, self.city_E.pk))
+        self.assertEqual(len(all_routes), 4)
+
+    def test_valid_route_form(self):
+        data = {'from_city': self.city_A.id, 'to_city': self.city_B.id, 'cities': [self.city_E.id, self.city_D.id], 'travelling_time':9}
+        form = RouteForm(data=data)
+        self.assertTrue(form.is_valid())
+
+    def test_invalid_route_form(self):
+        data = {'from_city': self.city_A.id, 'to_city': self.city_B.id,
+                'cities': [self.city_E.id, self.city_D.id],
+                }
+        form = RouteForm(data=data)
+        self.assertFalse(form.is_valid())
+
+        data = {'from_city': self.city_A.id, 'to_city': self.city_B.id,
+                'cities': [self.city_E.id, self.city_D.id],
+                'travelling_time': 9.45
+                }
+        form = RouteForm(data=data)
+        self.assertFalse(form.is_valid())
+
+    def test_message_error_more_time(self):
+        data = {'from_city': self.city_A.id, 'to_city': self.city_E.id,
+                'cities': [self.city_C.id],
+                'travelling_time': 9
+                }
+        response = self.client.post('/find_routes/', data)
+        self.assertContains(response, 'Время в пути больше заданного', 1, 200)
+
+    def test_message_error_from_cities(self):
+        data = {'from_city': self.city_B.id, 'to_city': self.city_E.id,
+                'cities': [self.city_C.id],
+                'travelling_time': 349
+                }
+        response = self.client.post('/find_routes/', data)
+        self.assertContains(response, 'Маршрут, через эти города невозможен', 1, 200)
