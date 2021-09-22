@@ -1,0 +1,177 @@
+[
+{
+  "model": "cities.city",
+  "pk": 1,
+  "fields": {
+    "name": "Бердянск"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 2,
+  "fields": {
+    "name": "Амстердам"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 3,
+  "fields": {
+    "name": "Лондон"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 5,
+  "fields": {
+    "name": "Берлин"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 6,
+  "fields": {
+    "name": "Киев"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 7,
+  "fields": {
+    "name": "Вена"
+  }
+},
+{
+  "model": "cities.city",
+  "pk": 9,
+  "fields": {
+    "name": "Рим"
+  }
+},
+{
+  "model": "routes.route",
+  "pk": 1,
+  "fields": {
+    "name": "228",
+    "travel_times": 122,
+    "from_city": 1,
+    "to_city": 5,
+    "trains": [
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "routes.route",
+  "pk": 3,
+  "fields": {
+    "name": "kb",
+    "travel_times": 123,
+    "from_city": 5,
+    "to_city": 1,
+    "trains": [
+      10,
+      6
+    ]
+  }
+},
+{
+  "model": "routes.route",
+  "pk": 4,
+  "fields": {
+    "name": "Брд-Вена",
+    "travel_times": 145,
+    "from_city": 1,
+    "to_city": 7,
+    "trains": [
+      7,
+      11
+    ]
+  }
+},
+{
+  "model": "routes.route",
+  "pk": 5,
+  "fields": {
+    "name": "Брд-Берлин",
+    "travel_times": 145,
+    "from_city": 1,
+    "to_city": 5,
+    "trains": [
+      7,
+      8
+    ]
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 1,
+  "fields": {
+    "name": "tr1",
+    "travel_time": 11,
+    "from_city": 2,
+    "to_city": 3
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 6,
+  "fields": {
+    "name": "tr5",
+    "travel_time": 100,
+    "from_city": 5,
+    "to_city": 6
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 7,
+  "fields": {
+    "name": "tr12",
+    "travel_time": 23,
+    "from_city": 1,
+    "to_city": 6
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 8,
+  "fields": {
+    "name": "tr4",
+    "travel_time": 122,
+    "from_city": 6,
+    "to_city": 5
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 9,
+  "fields": {
+    "name": "mx122",
+    "travel_time": 233,
+    "from_city": 1,
+    "to_city": 5
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 10,
+  "fields": {
+    "name": "kb1",
+    "travel_time": 23,
+    "from_city": 6,
+    "to_city": 1
+  }
+},
+{
+  "model": "trains.train",
+  "pk": 11,
+  "fields": {
+    "name": "са12",
+    "travel_time": 122,
+    "from_city": 6,
+    "to_city": 7
+  }
+}
+]
